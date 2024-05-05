@@ -15,13 +15,39 @@ class Client(QMainWindow,FMDs.Ui_MainWindow):
         self.socklow.connectToHost(QHostAddress.LocalHost, 6666)
         self.sockmedium.connectToHost(QHostAddress.LocalHost, 6667)
         self.sockhigh.connectToHost(QHostAddress.LocalHost, 6668)
-        self.socklow.connected.connect(lambda :self.write_data(self.socklow))
-        self.sockmedium.connected.connect(lambda :self.write_data(self.sockmedium))
-        self.sockhigh.connected.connect(lambda :self.write_data(self.sockhigh))
-    def write_data(self,sock):
-        sock.write("yes!".encode())
-        sock.write("yes!".encode())
+        self.socklow.connected.connect(lambda :self.lineEdit.setText("ready"))
+        self.sockmedium.connected.connect(lambda :self.lineEdit_2.setText("ready"))
+        self.sockhigh.connected.connect(lambda :self.lineEdit_3.setText("ready"))
+        self.serverlow = QTcpServer(self)
+        self.servermedium = QTcpServer(self)
+        self.serverhigh = QTcpServer(self)
+        self.sockets = []
+        if not self.serverlow.listen(QHostAddress.LocalHost, 9000):
+            print(self.serverlow.errorString())
+        if not self.servermedium.listen(QHostAddress.LocalHost, 9001):
+            print(self.servermedium.errorString())
+        if not self.serverhigh.listen(QHostAddress.LocalHost, 9002):
+            print(self.serverhigh.errorString())
+        self.serverlow.newConnection.connect(lambda: self.new_socket_slot(self.serverlow, self.lineEdit, 9000))
+        self.servermedium.newConnection.connect(lambda: self.new_socket_slot(self.servermedium, self.lineEdit_2, 9001))
+        self.serverhigh.newConnection.connect(lambda: self.new_socket_slot(self.serverhigh, self.lineEdit_3, 9002))
+    def new_socket_slot(self,server,line,port):
+        sock = server.nextPendingConnection()
+        self.sockets.append(sock)
+        sock.readyRead.connect(lambda: (self.send_to_server(sock.readAll(),port),\
+                                        line.setText(sock.readAll().data().decode())))
+        sock.disconnected.connect(sock.close)
+    def send_to_server(self,data,port):
+        if port==9000:
+            self.socklow.write(data)
+        elif port==9001:
+            self.sockmedium.write(data)
+        else:
+            self.sockhigh.write(data)
     def closeEvent(self, event):
+        self.serverlow.close()
+        self.servermedium.close()
+        self.serverhigh.close()
         self.socklow.close()
         self.sockmedium.close()
         self.sockhigh.close()
@@ -30,6 +56,5 @@ class Client(QMainWindow,FMDs.Ui_MainWindow):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     demo = Client()
-    demo.lineEdit.setText("cnm")
     demo.show()
     sys.exit(app.exec_())

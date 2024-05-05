@@ -23,7 +23,7 @@ class Server(QMainWindow,FMDs.Ui_MainWindow):
         self.servermedium.newConnection.connect(lambda: self.new_socket_slot(self.servermedium,self.lineEdit_2,7778))
         self.serverhigh.newConnection.connect(lambda: self.new_socket_slot(self.serverhigh,self.lineEdit_3,7779))
     def new_socket_slot(self,server,line,port):
-        print("yres1")
+        line.setText("receive one")
         sock = server.nextPendingConnection()
         self.sockets.append(sock)
         sock.readyRead.connect(lambda: self.send_to_user(sock.readAll(),port))
@@ -44,6 +44,6 @@ class Server(QMainWindow,FMDs.Ui_MainWindow):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     demo = Server()
-    demo.lineEdit.setText("cnm")
+    demo.setWindowTitle("Server")
     demo.show()
     sys.exit(app.exec_())
