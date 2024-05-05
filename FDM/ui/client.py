@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'user_accept.ui'
+# Form implementation generated from reading ui file 'client.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -14,35 +14,25 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(436, 297)
-        font = QtGui.QFont()
-        font.setFamily("Agave Nerd Font Mono")
-        font.setPointSize(12)
-        MainWindow.setFont(font)
+        MainWindow.resize(595, 540)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(140, 40, 171, 61))
+        self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(60, 49, 471, 421))
+        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.textBrowser = QtWidgets.QTextBrowser(self.verticalLayoutWidget)
         font = QtGui.QFont()
-        font.setFamily("Adobe Devanagari")
-        font.setPointSize(20)
-        font.setBold(False)
-        font.setWeight(50)
-        self.label.setFont(font)
-        self.label.setText("")
-        self.label.setObjectName("label")
-        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit.setGeometry(QtCore.QRect(10, 140, 421, 61))
-        font = QtGui.QFont()
-        font.setFamily("Agave Nerd Font Mono")
-        font.setPointSize(16)
-        self.lineEdit.setFont(font)
-        self.lineEdit.setText("")
-        self.lineEdit.setReadOnly(True)
-        self.lineEdit.setObjectName("lineEdit")
+        font.setFamily("Microsoft JhengHei")
+        font.setPointSize(12)
+        self.textBrowser.setFont(font)
+        self.textBrowser.setObjectName("textBrowser")
+        self.verticalLayout.addWidget(self.textBrowser)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 436, 23))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 595, 23))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)

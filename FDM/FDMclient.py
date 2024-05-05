@@ -3,8 +3,8 @@ import sys
 from PyQt5.QtCore import Qt, QTimer, QDateTime
 from PyQt5.QtNetwork import QTcpServer,QTcpSocket, QHostAddress
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QMainWindow
-from ui import FMDs
-class Client(QMainWindow,FMDs.Ui_MainWindow):
+from ui import client
+class Client(QMainWindow,client.Ui_MainWindow):
     def __init__(self):
         super(Client, self).__init__()
         self.setupUi(self)
@@ -15,9 +15,9 @@ class Client(QMainWindow,FMDs.Ui_MainWindow):
         self.socklow.connectToHost(QHostAddress.LocalHost, 6666)
         self.sockmedium.connectToHost(QHostAddress.LocalHost, 6667)
         self.sockhigh.connectToHost(QHostAddress.LocalHost, 6668)
-        self.socklow.connected.connect(lambda :self.lineEdit.setText("ready"))
-        self.sockmedium.connected.connect(lambda :self.lineEdit_2.setText("ready"))
-        self.sockhigh.connected.connect(lambda :self.lineEdit_3.setText("ready"))
+        self.socklow.connected.connect(lambda :self.textBrowser.append("低频连接就绪"))
+        self.sockmedium.connected.connect(lambda :self.textBrowser.append("中频连接就绪"))
+        self.sockhigh.connected.connect(lambda :self.textBrowser.append("高频连接就绪"))
         self.serverlow = QTcpServer(self)
         self.servermedium = QTcpServer(self)
         self.serverhigh = QTcpServer(self)
@@ -28,21 +28,23 @@ class Client(QMainWindow,FMDs.Ui_MainWindow):
             print(self.servermedium.errorString())
         if not self.serverhigh.listen(QHostAddress.LocalHost, 9002):
             print(self.serverhigh.errorString())
-        self.serverlow.newConnection.connect(lambda: self.new_socket_slot(self.serverlow, self.lineEdit, 9000))
-        self.servermedium.newConnection.connect(lambda: self.new_socket_slot(self.servermedium, self.lineEdit_2, 9001))
-        self.serverhigh.newConnection.connect(lambda: self.new_socket_slot(self.serverhigh, self.lineEdit_3, 9002))
-    def new_socket_slot(self,server,line,port):
+        self.serverlow.newConnection.connect(lambda: self.new_socket_slot(self.serverlow, 9000))
+        self.servermedium.newConnection.connect(lambda: self.new_socket_slot(self.servermedium, 9001))
+        self.serverhigh.newConnection.connect(lambda: self.new_socket_slot(self.serverhigh, 9002))
+    def new_socket_slot(self,server,port):
         sock = server.nextPendingConnection()
         self.sockets.append(sock)
-        sock.readyRead.connect(lambda: (self.send_to_server(sock.readAll(),port),\
-                                        line.setText(sock.readAll().data().decode())))
+        sock.readyRead.connect(lambda: self.send_to_server(sock.readAll(),port))
         sock.disconnected.connect(sock.close)
     def send_to_server(self,data,port):
         if port==9000:
+            self.textBrowser.append("来自低频信息:\n"+data.data().decode())
             self.socklow.write(data)
         elif port==9001:
+            self.textBrowser.append("来自中频信息:\n" + data.data().decode())
             self.sockmedium.write(data)
         else:
+            self.textBrowser.append("来自高频信息:\n" + data.data().decode())
             self.sockhigh.write(data)
     def closeEvent(self, event):
         self.serverlow.close()

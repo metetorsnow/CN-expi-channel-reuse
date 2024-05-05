@@ -53,7 +53,7 @@
     <property name="font">
      <font>
       <family>Agave Nerd Font Mono</family>
-      <pointsize>12</pointsize>
+      <pointsize>16</pointsize>
      </font>
     </property>
     <property name="text">

@@ -31,7 +31,6 @@ class Server(QMainWindow,FMDs.Ui_MainWindow):
     def send_to_user(self,data,port):
         sock = QTcpSocket(self)
         sock.connectToHost(QHostAddress.LocalHost, port)
-        print(data)
         sock.connected.connect(lambda: sock.write(data))
     def closeEvent(self, event):
         self.serverlow.close()
