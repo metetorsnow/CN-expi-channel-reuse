@@ -26,7 +26,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setFamily("Segoe UI Emoji")
         font.setStyleStrategy(QtGui.QFont.PreferAntialias)
-        font.setHintingPreference(QtGui.QFont.PreferFullHinting)
+        font.setHintingPreference(QtGui.QFont.PreferNoHinting)
         font.setPointSize(20)
         font.setBold(False)
         font.setWeight(50)
