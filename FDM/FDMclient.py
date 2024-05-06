@@ -38,13 +38,13 @@ class Client(QMainWindow,client.Ui_MainWindow):
         sock.disconnected.connect(sock.close)
     def send_to_server(self,data,port):
         if port==9000:
-            self.textBrowser.append("来自低频信息:\n"+data.data().decode())
+            self.textBrowser.append("*收到来自低频信息:\n"+data.data().decode())
             self.socklow.write(data)
         elif port==9001:
-            self.textBrowser.append("来自中频信息:\n" + data.data().decode())
+            self.textBrowser.append("*收到来自中频信息:\n" + data.data().decode())
             self.sockmedium.write(data)
         else:
-            self.textBrowser.append("来自高频信息:\n" + data.data().decode())
+            self.textBrowser.append("*收到来自高频信息:\n" + data.data().decode())
             self.sockhigh.write(data)
     def closeEvent(self, event):
         self.serverlow.close()
@@ -58,5 +58,6 @@ class Client(QMainWindow,client.Ui_MainWindow):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     demo = Client()
+    demo.move(1100,50)
     demo.show()
     sys.exit(app.exec_())

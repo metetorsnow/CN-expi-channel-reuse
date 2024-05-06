@@ -16,7 +16,7 @@ class user(QMainWindow,user_send.Ui_MainWindow):
 
         self.pushButton.clicked.connect(lambda :self.send_data())
     def send_data(self):
-        frequence=int(self.lineEdit_2.text())
+        frequence=int(self.lineEdit_2.text()) if self.lineEdit_2.text()!="" else 0
         if frequence>=20 and frequence<=120:
             self.sock = QTcpSocket(self)
             self.sockets.append(self.sock)
@@ -45,14 +45,14 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     a=user("A")
     a.setWindowTitle("userA1")
-    a.move(200, 400)
+    a.move(50, 80)
     a.show()
     b = user("B")
     b.setWindowTitle("userB1")
-    b.move(800, 400)
+    b.move(50, 400)
     b.show()
     c = user("C")
     c.setWindowTitle("userC1")
-    c.move(1400, 400)
+    c.move(50, 700)
     c.show()
     sys.exit(app.exec_())
