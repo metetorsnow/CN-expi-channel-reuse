@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>436</width>
-    <height>289</height>
+    <width>443</width>
+    <height>462</height>
    </rect>
   </property>
   <property name="font">
@@ -43,7 +43,7 @@
      <bool>true</bool>
     </property>
     <property name="placeholderText">
-     <string>🤗等待接收信息</string>
+     <string>等待接收信息🤗</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -65,13 +65,30 @@
      <string>码片向量</string>
     </property>
    </widget>
+   <widget class="QTextBrowser" name="textBrowser">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>220</y>
+      <width>421</width>
+      <height>192</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>CaskaydiaCove NFM SemiBold</family>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>436</width>
+     <width>443</width>
      <height>23</height>
     </rect>
    </property>

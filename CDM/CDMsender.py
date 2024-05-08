@@ -4,12 +4,14 @@ from PyQt5.QtNetwork import QTcpServer,QTcpSocket, QHostAddress
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QMainWindow,QMessageBox
 from ui import sender
 
+
 class user(QMainWindow,sender.Ui_MainWindow):
     def __init__(self,code,port):
         super(user, self).__init__()
         self.setupUi(self)
         self.port=port
-        self.code=code
+        self.code=[1 if i==1 else 255 for i in code]
+        self.negcode=[255 if i==1 else 1 for i in code]
         self.sockets=[]
 
         self.pushButton.clicked.connect(lambda :self.send_data())
@@ -24,8 +26,12 @@ class user(QMainWindow,sender.Ui_MainWindow):
         self.sock.connected.connect(lambda: self.sock.write(self.signal))
 
     def str_to_signal(self,string):
+        s=b""
         for c in string:
             ch=bin(ord(c))[2:].zfill(8)
+            for i in range(8):
+                s+=(bytes(self.code) if ch[i]=='1' else bytes(self.negcode))
+        return s
 
     def closeEvent(self, event):
         for i in self.sockets:

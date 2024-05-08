@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(436, 289)
+        MainWindow.resize(443, 462)
         font = QtGui.QFont()
         font.setFamily("Agave Nerd Font Mono")
         font.setPointSize(12)
@@ -27,6 +27,8 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setFamily("Segoe UI Emoji")
         font.setPointSize(16)
+        font.setStyleStrategy(QtGui.QFont.PreferAntialias)
+        font.setHintingPreference(QtGui.QFont.PreferNoHinting)
         self.lineEdit.setFont(font)
         self.lineEdit.setText("")
         self.lineEdit.setReadOnly(True)
@@ -38,9 +40,17 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.label.setFont(font)
         self.label.setObjectName("label")
+        self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
+        self.textBrowser.setGeometry(QtCore.QRect(10, 220, 421, 192))
+        font = QtGui.QFont()
+        font.setFamily("CaskaydiaCove NFM SemiBold")
+        font.setBold(True)
+        font.setWeight(75)
+        self.textBrowser.setFont(font)
+        self.textBrowser.setObjectName("textBrowser")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 436, 23))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 443, 23))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -53,5 +63,5 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.lineEdit.setPlaceholderText(_translate("MainWindow", "🤗等待接收信息"))
+        self.lineEdit.setPlaceholderText(_translate("MainWindow", "等待接收信息🤗"))
         self.label.setText(_translate("MainWindow", "码片向量"))
