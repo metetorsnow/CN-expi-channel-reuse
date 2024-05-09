@@ -29,7 +29,6 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         self.lineEdit.setFont(font)
         self.lineEdit.setText("")
-        self.lineEdit.setReadOnly(True)
         self.lineEdit.setObjectName("lineEdit")
         self.verticalLayout.addWidget(self.lineEdit)
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
